@@ -6,7 +6,7 @@ from robodk.robolink import *
 from robodk.robomath import *
 
 # Define relative path to the .rdk file
-relative_path = "src/roboDK/Assistive_UR5e.rdk"
+relative_path = "src/roboDK/GoodBoy.rdk"
 absolute_path = os.path.abspath(relative_path)
 
 # Start RoboDK with the project file
@@ -17,10 +17,12 @@ robot = RDK.Item("UR5e")
 base = RDK.Item("UR5e Base")
 tool = RDK.Item('Hand')
 Init_target = RDK.Item('Init')
-App_shake_target = RDK.Item('App_shake')
-Shake_target = RDK.Item('Shake')
-App_give5_target = RDK.Item('App_give5')
-Give5_target = RDK.Item('Give5')
+Give_paw_app = RDK.Item("Give_paw_approach")
+Give_paw = RDK.Item("Give_paw") 
+Good_boy_app = RDK.Item("Good_boy_approach") 
+Good_boy_1 = RDK.Item("Good_boy_1")
+Good_boy_2 = RDK.Item("Good_boy_2")
+Good_boy_3 = RDK.Item("Good_boy_3") 
 
 # Set robot frame, tool and speed
 robot.setPoseFrame(base)
@@ -49,23 +51,23 @@ def move_to_init():
     robot.MoveL(Init_target, True)
     print("Init_target REACHED")
 
-def hand_shake():
-    print("Hand Shake")
-    robot.setSpeed(50)
-    robot.MoveL(App_shake_target, True)
-    robot.setSpeed(100)
-    robot.MoveL(Shake_target, True)
-    robot.MoveL(App_shake_target, True)
-    print("Hand Shake FINISHED")
+def movement_1():
+    print("Give me paw")
+    robot.MoveL(Give_paw_app, True)
+    robot.MoveL(Give_paw, True)
+    robot.MoveL(Give_paw_app, True)
+    print("Give me paw FINISHED")
 
-def give_me_5():
-    print("Give me 5!")
-    robot.setSpeed(50)
-    robot.MoveL(App_give5_target, True)
-    robot.setSpeed(100)
-    robot.MoveL(Give5_target, True)
-    robot.MoveL(App_give5_target, True)
-    print("Give me 5! FINISHED")
+def movement_2():
+    print("Who is a good boy?!")
+    robot.MoveL(Good_boy_app, True)
+    robot.MoveL(Good_boy_1, True)
+    robot.MoveL(Good_boy_2, True)
+    robot.MoveL(Good_boy_1, True)
+    robot.MoveL(Good_boy_3, True)
+    robot.MoveL(Good_boy_1, True)
+    robot.MoveL(Good_boy_app, True)
+    print("Good boy FINISHED")
 
 # Confirmation dialog to close RoboDK
 def confirm_close():
@@ -88,8 +90,9 @@ def confirm_close():
 def main():
     robot_online(False)  # True for real robot, False for simulation
     move_to_init()
-    hand_shake()
-    give_me_5()
+    movement_1()
+    movement_2()
+    move_to_init()
 
 # Run main and handle closing
 if __name__ == "__main__":
