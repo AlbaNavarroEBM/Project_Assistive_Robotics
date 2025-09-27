@@ -38,16 +38,26 @@ blend_r = 0.0
 timej = 6
 timel = 4
 
+def movel_from_target(target, accel=accel_mss, speed=speed_ms, tim=timel, blend=blend_r):
+    """Return a URScript movel command string for the given RoboDK target."""
+    if not target.Valid():
+        raise ValueError(f"Target {target.Name()} is not valid")
+    X, Y, Z, Roll, Pitch, Yaw = Pose_2_TxyzRxyz(target.Pose())
+    return (
+        f"movel(p[{X:.6f}, {Y:.6f}, {Z:.6f}, {Roll:.6f}, {Pitch:.6f}, {Yaw:.6f}], "
+        f"a={accel}, v={speed}, t={tim}, r={blend})"
+    )
+
 # URScript commands
-# canviar joint positions
 set_tcp = "set_tcp(p[0.000000, 0.000000, 0.050000, 0.000000, 0.000000, 0.000000])"
 movej_init = f"movej([-1.009423, -1.141297, -1.870417, 3.011723, -1.009423, 0.000000],1.20000,0.75000,{timel},0.0000)"
-movel_give_paw_app = f"movel([TODO_JOINT_POSITIONS],{accel_mss},{speed_ms},{timel},0.000)"
-movel_give_paw = f"movel([TODO_JOINT_POSITIONS],{accel_mss},{speed_ms},{timel/2},0.000)"
-movel_good_boy_app = f"movel([TODO_JOINT_POSITIONS],{accel_mss},{speed_ms},{timel},0.000)"
-movel_good_boy_1 = f"movel([TODO_JOINT_POSITIONS],{accel_mss},{speed_ms},{timel/2},0.000)"
-movel_good_boy_2 = f"movel([TODO_JOINT_POSITIONS],{accel_mss},{speed_ms},{timel/2},0.000)"
-movel_good_boy_3 = f"movel([TODO_JOINT_POSITIONS],{accel_mss},{speed_ms},{timel/2},0.000)"
+movel_give_paw_app = movel_from_target(Give_paw_app, tim=timel)
+movel_give_paw     = movel_from_target(Give_paw, tim=timel/2)
+
+movel_good_boy_app = movel_from_target(Good_boy_app, tim=timel)
+movel_good_boy_1   = movel_from_target(Good_boy_1, tim=timel/2)
+movel_good_boy_2   = movel_from_target(Good_boy_2, tim=timel/2)
+movel_good_boy_3   = movel_from_target(Good_boy_3, tim=timel/2)
 
 # Check robot connection
 def check_robot_port(ip, port):
