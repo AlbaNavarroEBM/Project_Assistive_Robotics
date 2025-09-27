@@ -9,7 +9,7 @@ from robodk.robolink import *
 from robodk.robomath import *
 
 # Load RoboDK project from relative path
-relative_path = "src/roboDK/Assistive_UR5e.rdk"
+relative_path = "src/roboDK/GoodBoy.rdk"
 absolute_path = os.path.abspath(relative_path)
 RDK = Robolink()
 
@@ -18,10 +18,12 @@ robot = RDK.Item("UR5e")
 base = RDK.Item("UR5e Base")
 tool = RDK.Item('Hand')
 Init_target = RDK.Item('Init')
-App_shake_target = RDK.Item('App_shake')
-Shake_target = RDK.Item('Shake')
-App_give5_target = RDK.Item('App_give5')
-Give5_target = RDK.Item('Give5')
+Give_paw_app = RDK.Item('Give_paw_approach')
+Give_paw = RDK.Item('Give_paw')
+Good_boy_app = RDK.Item('Good_boy_approach')
+Good_boy_1 = RDK.Item('Good_boy_1')
+Good_boy_2 = RDK.Item('Good_boy_2')
+Good_boy_3 = RDK.Item('Good_boy_3')
 
 robot.setPoseFrame(base)
 robot.setPoseTool(tool)
@@ -37,12 +39,15 @@ timej = 6
 timel = 4
 
 # URScript commands
+# canviar joint positions
 set_tcp = "set_tcp(p[0.000000, 0.000000, 0.050000, 0.000000, 0.000000, 0.000000])"
 movej_init = f"movej([-1.009423, -1.141297, -1.870417, 3.011723, -1.009423, 0.000000],1.20000,0.75000,{timel},0.0000)"
-movel_app_shake = f"movel([-2.268404, -1.482966, -2.153143, -2.647089, -2.268404, 0.000000],{accel_mss},{speed_ms},{timel},0.000)"
-movel_shake = f"movel([-2.268404, -1.663850, -2.294637, -2.324691, -2.268404, 0.000000],{accel_mss},{speed_ms},{timel/2},0.000)"
-movel_app_give5 = f"movel([-2.280779, -1.556743, -2.129529, 5.257071, -1.570796, 2.280779],{accel_mss},{speed_ms},{timel},0.000)"
-movel_give5 = f"movel([-2.195869, -1.642206, -2.040971, 5.253965, -1.570796, 2.195869],{accel_mss},{speed_ms},{timel/2},0.000)"
+movel_give_paw_app = f"movel([TODO_JOINT_POSITIONS],{accel_mss},{speed_ms},{timel},0.000)"
+movel_give_paw = f"movel([TODO_JOINT_POSITIONS],{accel_mss},{speed_ms},{timel/2},0.000)"
+movel_good_boy_app = f"movel([TODO_JOINT_POSITIONS],{accel_mss},{speed_ms},{timel},0.000)"
+movel_good_boy_1 = f"movel([TODO_JOINT_POSITIONS],{accel_mss},{speed_ms},{timel/2},0.000)"
+movel_good_boy_2 = f"movel([TODO_JOINT_POSITIONS],{accel_mss},{speed_ms},{timel/2},0.000)"
+movel_good_boy_3 = f"movel([TODO_JOINT_POSITIONS],{accel_mss},{speed_ms},{timel/2},0.000)"
 
 # Check robot connection
 def check_robot_port(ip, port):
@@ -68,7 +73,7 @@ def receive_response(t):
         exit(1)
 
 # Movements
-def Init():
+def move_to_init():
     print("Init")
     robot.MoveL(Init_target, True)
     print("Init_target REACHED")
@@ -81,42 +86,54 @@ def Init():
     else:
         print("UR5e not connected. Simulation only.")
 
-def Hand_shake():
-    print("Hand Shake")
+def movement_1():
+    print("Give me paw")
     robot.setSpeed(20)
-    robot.MoveL(App_shake_target, True)
+    robot.MoveL(Give_paw_app, True)
     robot.setSpeed(100)
-    robot.MoveL(Shake_target, True)
-    robot.MoveL(App_shake_target, True)
-    print("Hand Shake FINISHED")
+    robot.MoveL(Give_paw, True)
+    robot.MoveL(Give_paw_app, True)
+    print("Give me paw FINISHED")
     if robot_is_connected:
-        print("App_shake REAL UR5e")
+        print("Give_paw REAL UR5e")
         send_ur_script(set_tcp)
         receive_response(1)
-        send_ur_script(movel_app_shake)
+        send_ur_script(movel_give_paw_app)
         receive_response(timel)
-        send_ur_script(movel_shake)
+        send_ur_script(movel_give_paw)
         receive_response(timel)
-        send_ur_script(movel_app_shake)
+        send_ur_script(movel_give_paw_app)
         receive_response(timel)
 
-def Give_me_5():
-    print("Give me 5!")
+def movement_2():
+    print("Who is a good boy?!")
     robot.setSpeed(20)
-    robot.MoveL(App_give5_target, True)
+    robot.MoveL(Good_boy_app, True)
     robot.setSpeed(100)
-    robot.MoveL(Give5_target, True)
-    robot.MoveL(App_give5_target, True)
-    print("Give me 5! FINISHED")
+    robot.MoveL(Good_boy_1, True)
+    robot.MoveL(Good_boy_2, True)
+    robot.MoveL(Good_boy_1, True)
+    robot.MoveL(Good_boy_3, True)
+    robot.MoveL(Good_boy_1, True)
+    robot.MoveL(Good_boy_app, True)
+    print("Good boy FINISHED")
     if robot_is_connected:
-        print("Give5 REAL UR5e")
+        print("Good_boy REAL UR5e")
         send_ur_script(set_tcp)
         receive_response(1)
-        send_ur_script(movel_app_give5)
+        send_ur_script(movel_good_boy_app)
         receive_response(timel)
-        send_ur_script(movel_give5)
+        send_ur_script(movel_good_boy_1)
         receive_response(timel)
-        send_ur_script(movel_app_give5)
+        send_ur_script(movel_good_boy_2)
+        receive_response(timel)
+        send_ur_script(movel_good_boy_1)
+        receive_response(timel)
+        send_ur_script(movel_good_boy_3)
+        receive_response(timel)
+        send_ur_script(movel_good_boy_1)
+        receive_response(timel)
+        send_ur_script(movel_good_boy_app)
         receive_response(timel)
 
 # Confirmation dialog to close RoboDK
@@ -140,9 +157,10 @@ def confirm_close():
 def main():
     global robot_is_connected
     robot_is_connected = check_robot_port(ROBOT_IP, ROBOT_PORT)
-    Init()
-    Hand_shake()
-    Give_me_5()
+    move_to_init()
+    movement_1()
+    movement_2()
+    move_to_init()
     if robot_is_connected:
         robot_socket.close()
 
