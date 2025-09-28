@@ -24,6 +24,8 @@ Good_boy_app = RDK.Item('Good_boy_approach')
 Good_boy_1 = RDK.Item('Good_boy_1')
 Good_boy_2 = RDK.Item('Good_boy_2')
 Good_boy_3 = RDK.Item('Good_boy_3')
+Sit_1= RDK.Item("Give_paw_approach")
+Sit_2= RDK.Item("Sit_2")
 
 robot.setPoseFrame(base)
 robot.setPoseTool(tool)
@@ -58,6 +60,8 @@ movel_good_boy_app = movel_from_target(Good_boy_app, tim=timel)
 movel_good_boy_1   = movel_from_target(Good_boy_1, tim=timel/2)
 movel_good_boy_2   = movel_from_target(Good_boy_2, tim=timel/2)
 movel_good_boy_3   = movel_from_target(Good_boy_3, tim=timel/2)
+movel_sit_1= movel_from_target(Sit_1, tim=timel/2)
+movel_sit_2=movel_from_target(Sit_2, tim=timel/2)
 
 # Check robot connection
 def check_robot_port(ip, port):
@@ -146,6 +150,28 @@ def movement_2():
         send_ur_script(movel_good_boy_app)
         receive_response(timel)
 
+def movement_3():
+    print("Sit!")
+    robot.setSpeed(20)
+    robot.MoveL(Good_boy_app, True) 
+    robot.setSpeed(100)
+    robot.MoveL(Sit_1, True)
+    robot.MoveL(Sit_2, True)
+    robot.MoveL(Good_boy_app, True)
+    print("Sit FINISHED")
+    if robot_is_connected:
+        print("Sit REAL UR5e")
+        send_ur_script(set_tcp)
+        receive_response(1)
+        send_ur_script(movel_good_boy_app)
+        receive_response(timel)
+        send_ur_script(movel_sit_1)
+        receive_response(timel)
+        send_ur_script(movel_sit_2)
+        receive_response(timel)
+        send_ur_script(movel_good_boy_app)
+        receive_response(timel)
+
 # Confirmation dialog to close RoboDK
 def confirm_close():
     root = tk.Tk()
@@ -169,6 +195,8 @@ def main():
     robot_is_connected = check_robot_port(ROBOT_IP, ROBOT_PORT)
     move_to_init()
     movement_1()
+    movement_2()
+    movement_3()
     movement_2()
     move_to_init()
     if robot_is_connected:

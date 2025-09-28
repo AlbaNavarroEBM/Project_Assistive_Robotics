@@ -23,6 +23,8 @@ Good_boy_app = RDK.Item("Good_boy_approach")
 Good_boy_1 = RDK.Item("Good_boy_1")
 Good_boy_2 = RDK.Item("Good_boy_2")
 Good_boy_3 = RDK.Item("Good_boy_3") 
+Sit_1= RDK.Item("Give_paw_approach")
+Sit_2= RDK.Item("Sit_2")
 
 # Set robot frame, tool and speed
 robot.setPoseFrame(base)
@@ -69,6 +71,14 @@ def movement_2():
     robot.MoveL(Good_boy_app, True)
     print("Good boy FINISHED")
 
+def movement_3():
+    print("Sit!")
+    robot.MoveL(Good_boy_app, True)
+    robot.MoveL(Sit_1, True)
+    robot.MoveL(Sit_2, True)
+    robot.MoveL(Good_boy_app, True)
+    print("Sit FINISHED")
+
 # Confirmation dialog to close RoboDK
 def confirm_close():
     root = tk.Tk()
@@ -91,6 +101,8 @@ def main():
     robot_online(False)  # True for real robot, False for simulation
     move_to_init()
     movement_1()
+    movement_2()
+    movement_3()
     movement_2()
     move_to_init()
 
