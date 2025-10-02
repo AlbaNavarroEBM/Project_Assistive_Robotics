@@ -24,7 +24,7 @@ Good_boy_app = RDK.Item('Good_boy_approach')
 Good_boy_1 = RDK.Item('Good_boy_1')
 Good_boy_2 = RDK.Item('Good_boy_2')
 Good_boy_3 = RDK.Item('Good_boy_3')
-Sit_1= RDK.Item("Give_paw_approach")
+Sit_1= RDK.Item("Give_paw_approach") 
 Sit_2= RDK.Item("Sit_2")
 
 robot.setPoseFrame(base)
@@ -99,7 +99,7 @@ def move_to_init():
         send_ur_script(set_tcp)
         receive_response(1)
         send_ur_script(movej_init)
-        receive_response(timej)
+        receive_response(1) ## modificat: timel-->1
     else:
         print("UR5e not connected. Simulation only.")
 
@@ -116,11 +116,11 @@ def movement_1():
         send_ur_script(set_tcp)
         receive_response(1)
         send_ur_script(movel_give_paw_app)
-        receive_response(timel)
+        receive_response(1) ## modificat: timel-->1
         send_ur_script(movel_give_paw)
         receive_response(timel)
         send_ur_script(movel_give_paw_app)
-        receive_response(timel)
+        receive_response(2) ## modificat: timel-->2
 
 def movement_2():
     print("Who is a good boy?!")
@@ -139,19 +139,19 @@ def movement_2():
         send_ur_script(set_tcp)
         receive_response(1)
         send_ur_script(movel_good_boy_app)
-        receive_response(timel)
+        receive_response(1) ## modificat: timel-->1
         send_ur_script(movel_good_boy_1)
-        receive_response(timel)
+        receive_response(0.5) ## modificat: timel-->0.5
         send_ur_script(movel_good_boy_2)
-        receive_response(timel)
+        receive_response(0.5) ## modificat: timel-->0.5
         send_ur_script(movel_good_boy_1)
-        receive_response(timel)
+        receive_response(0.5) ## modificat: timel-->0.5
         send_ur_script(movel_good_boy_3)
-        receive_response(timel)
+        receive_response(0.5) ## modificat: timel-->0.5
         send_ur_script(movel_good_boy_1)
-        receive_response(timel)
+        receive_response(0.5) ## modificat: timel-->0.5
         send_ur_script(movel_good_boy_app)
-        receive_response(timel)
+        receive_response(2) ## modificat: timel-->2
 
 def movement_3():
     print("Sit!")
@@ -166,14 +166,14 @@ def movement_3():
         print("Sit REAL UR5e")
         send_ur_script(set_tcp)
         receive_response(1)
-        send_ur_script(movel_good_boy_app)
-        receive_response(timel)
+        #send_ur_script(movel_good_boy_app)###crec que no cal
+        #receive_response(1)
         send_ur_script(movel_sit_1)
-        receive_response(timel)
+        receive_response(0.5) ## modificat: timel-->0.5
         send_ur_script(movel_sit_2)
-        receive_response(timel)
-        send_ur_script(movel_good_boy_app)
-        receive_response(timel)
+        receive_response(2) ## modificat: timel-->2
+        #send_ur_script(movel_good_boy_app)###crec que no cal
+        #receive_response(1)
 
 # Confirmation dialog to close RoboDK
 def confirm_close():
