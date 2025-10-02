@@ -40,28 +40,31 @@ blend_r = 0.0
 timej = 6
 timel = 4
 
-def movel_from_target(target, accel=accel_mss, speed=speed_ms, tim=timel, blend=blend_r):
-    """Return a URScript movel command string for the given RoboDK target."""
+def movej_from_target(target, accel=accel_mss, speed=speed_ms, tim=timej, blend=blend_r):
+    """Return a URScript movej command string for the given RoboDK target (in joint space)."""
     if not target.Valid():
         raise ValueError(f"Target {target.Name()} is not valid")
-    X, Y, Z, Roll, Pitch, Yaw = Pose_2_TxyzRxyz(target.Pose())
+    
+    # Get the joints of the target in radians
+    j1, j2, j3, j4, j5, j6 = np.radians(target.Joints()).tolist()[0]
+
     return (
-        f"movel(p[{X:.6f}, {Y:.6f}, {Z:.6f}, {Roll:.6f}, {Pitch:.6f}, {Yaw:.6f}], "
+        f"movej([{j1:.6f}, {j2:.6f}, {j3:.6f}, {j4:.6f}, {j5:.6f}, {j6:.6f}], "
         f"a={accel}, v={speed}, t={tim}, r={blend})"
     )
 
 # URScript commands
 set_tcp = "set_tcp(p[0.000000, 0.000000, 0.050000, 0.000000, 0.000000, 0.000000])"
 movej_init = f"movej([-1.009423, -1.141297, -1.870417, 3.011723, -1.009423, 0.000000],1.20000,0.75000,{timel},0.0000)"
-movel_give_paw_app = movel_from_target(Give_paw_app, tim=timel)
-movel_give_paw     = movel_from_target(Give_paw, tim=timel/2)
+movel_give_paw_app = movej_from_target(Give_paw_app, tim=timel)
+movel_give_paw     = movej_from_target(Give_paw, tim=timel/2)
 
-movel_good_boy_app = movel_from_target(Good_boy_app, tim=timel)
-movel_good_boy_1   = movel_from_target(Good_boy_1, tim=timel/2)
-movel_good_boy_2   = movel_from_target(Good_boy_2, tim=timel/2)
-movel_good_boy_3   = movel_from_target(Good_boy_3, tim=timel/2)
-movel_sit_1= movel_from_target(Sit_1, tim=timel/2)
-movel_sit_2=movel_from_target(Sit_2, tim=timel/2)
+movel_good_boy_app = movej_from_target(Good_boy_app, tim=timel)
+movel_good_boy_1   = movej_from_target(Good_boy_1, tim=timel/2)
+movel_good_boy_2   = movej_from_target(Good_boy_2, tim=timel/2)
+movel_good_boy_3   = movej_from_target(Good_boy_3, tim=timel/2)
+movel_sit_1= movej_from_target(Sit_1, tim=timel/2)
+movel_sit_2=movej_from_target(Sit_2, tim=timel/2)
 
 # Check robot connection
 def check_robot_port(ip, port):
