@@ -92,7 +92,7 @@ def receive_response(t):
 # Movements
 def move_to_init():
     print("Init")
-    robot.MoveL(Init_target, True)
+    robot.MoveJ(Init_target, True)
     print("Init_target REACHED")
     if robot_is_connected:
         print("Init REAL UR5e")
@@ -106,10 +106,10 @@ def move_to_init():
 def movement_1():
     print("Give me paw")
     robot.setSpeed(20)
-    robot.MoveL(Give_paw_app, True)
+    robot.MoveJ(Give_paw_app, True)
     robot.setSpeed(100)
-    robot.MoveL(Give_paw, True)
-    robot.MoveL(Give_paw_app, True)
+    robot.MoveJ(Give_paw, True)
+    robot.MoveJ(Give_paw_app, True)
     print("Give me paw FINISHED")
     if robot_is_connected:
         print("Give_paw REAL UR5e")
@@ -125,14 +125,14 @@ def movement_1():
 def movement_2():
     print("Who is a good boy?!")
     robot.setSpeed(20)
-    robot.MoveL(Good_boy_app, True)
+    robot.MoveJ(Good_boy_app, True)
     robot.setSpeed(100)
-    robot.MoveL(Good_boy_1, True)
-    robot.MoveL(Good_boy_2, True)
-    robot.MoveL(Good_boy_1, True)
-    robot.MoveL(Good_boy_3, True)
-    robot.MoveL(Good_boy_1, True)
-    robot.MoveL(Good_boy_app, True)
+    robot.MoveJ(Good_boy_1, True)
+    robot.MoveJ(Good_boy_2, True)
+    robot.MoveJ(Good_boy_1, True)
+    robot.MoveJ(Good_boy_3, True)
+    robot.MoveJ(Good_boy_1, True)
+    robot.MoveJ(Good_boy_app, True)
     print("Good boy FINISHED")
     if robot_is_connected:
         print("Good_boy REAL UR5e")
@@ -156,11 +156,11 @@ def movement_2():
 def movement_3():
     print("Sit!")
     robot.setSpeed(20)
-    robot.MoveL(Good_boy_app, True) 
+    robot.MoveJ(Good_boy_app, True) 
     robot.setSpeed(100)
-    robot.MoveL(Sit_1, True)
-    robot.MoveL(Sit_2, True)
-    robot.MoveL(Good_boy_app, True)
+    robot.MoveJ(Sit_1, True)
+    robot.MoveJ(Sit_2, True)
+    robot.MoveJ(Good_boy_app, True)
     print("Sit FINISHED")
     if robot_is_connected:
         print("Sit REAL UR5e")
