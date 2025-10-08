@@ -99,7 +99,7 @@ def move_to_init():
         send_ur_script(set_tcp)
         receive_response(1)
         send_ur_script(movej_init)
-        receive_response(timej)
+        receive_response(2)
     else:
         print("UR5e not connected. Simulation only.")
 
@@ -116,11 +116,11 @@ def movement_1():
         send_ur_script(set_tcp)
         receive_response(1)
         send_ur_script(movel_give_paw_app)
-        receive_response(timel)
+        receive_response(2)
         send_ur_script(movel_give_paw)
-        receive_response(timel)
+        receive_response(2)
         send_ur_script(movel_give_paw_app)
-        receive_response(timel)
+        receive_response(2)
 
 def movement_2():
     print("Who is a good boy?!")
@@ -139,19 +139,19 @@ def movement_2():
         send_ur_script(set_tcp)
         receive_response(1)
         send_ur_script(movel_good_boy_app)
-        receive_response(timel)
+        receive_response(2)
         send_ur_script(movel_good_boy_1)
-        receive_response(timel)
+        receive_response(2)
         send_ur_script(movel_good_boy_2)
-        receive_response(timel)
+        receive_response(2)
         send_ur_script(movel_good_boy_1)
-        receive_response(timel)
+        receive_response(2)
         send_ur_script(movel_good_boy_3)
-        receive_response(timel)
+        receive_response(2)
         send_ur_script(movel_good_boy_1)
-        receive_response(timel)
+        receive_response(2)
         send_ur_script(movel_good_boy_app)
-        receive_response(timel)
+        receive_response(2)
 
 def movement_3():
     print("Sit!")
@@ -167,13 +167,13 @@ def movement_3():
         send_ur_script(set_tcp)
         receive_response(1)
         send_ur_script(movel_good_boy_app)
-        receive_response(timel)
+        receive_response(2)
         send_ur_script(movel_sit_1)
-        receive_response(timel)
+        receive_response(2)
         send_ur_script(movel_sit_2)
-        receive_response(timel)
+        receive_response(2)
         send_ur_script(movel_good_boy_app)
-        receive_response(timel)
+        receive_response(2)
 
 # Confirmation dialog to close RoboDK
 def confirm_close():
