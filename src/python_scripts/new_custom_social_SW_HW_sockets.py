@@ -37,8 +37,7 @@ ROBOT_PORT = 30002
 accel_mss = 1.2
 speed_ms = 0.75
 blend_r = 0.0
-timej = 6
-timel = 4
+timej = 4
 
 def movej_from_target(target, accel=accel_mss, speed=speed_ms, tim=timej, blend=blend_r):
     """Return a URScript movej command string for the given RoboDK target (in joint space)."""
@@ -55,16 +54,16 @@ def movej_from_target(target, accel=accel_mss, speed=speed_ms, tim=timej, blend=
 
 # URScript commands
 set_tcp = "set_tcp(p[0.000000, 0.000000, 0.050000, 0.000000, 0.000000, 0.000000])"
-movej_init = f"movej([-1.009423, -1.141297, -1.870417, 3.011723, -1.009423, 0.000000],1.20000,0.75000,{timel},0.0000)"
-movel_give_paw_app = movej_from_target(Give_paw_app, tim=timel)
-movel_give_paw     = movej_from_target(Give_paw, tim=timel/2)
+movej_init = f"movej([-1.009423, -1.141297, -1.870417, 3.011723, -1.009423, 0.000000],1.20000,0.75000,{timej},0.0000)"
+movel_give_paw_app = movej_from_target(Give_paw_app, tim=timej)
+movel_give_paw     = movej_from_target(Give_paw, tim=timej/2)
 
-movel_good_boy_app = movej_from_target(Good_boy_app, tim=timel)
-movel_good_boy_1   = movej_from_target(Good_boy_1, tim=timel/2)
-movel_good_boy_2   = movej_from_target(Good_boy_2, tim=timel/2)
-movel_good_boy_3   = movej_from_target(Good_boy_3, tim=timel/2)
-movel_sit_1= movej_from_target(Sit_1, tim=timel/2)
-movel_sit_2=movej_from_target(Sit_2, tim=timel/2)
+movel_good_boy_app = movej_from_target(Good_boy_app, tim=timej)
+movel_good_boy_1   = movej_from_target(Good_boy_1, tim=timej/2)
+movel_good_boy_2   = movej_from_target(Good_boy_2, tim=timej/2)
+movel_good_boy_3   = movej_from_target(Good_boy_3, tim=timej/2)
+movel_sit_1= movej_from_target(Sit_1, tim=timej/2)
+movel_sit_2=movej_from_target(Sit_2, tim=timej/2)
 
 # Check robot connection
 def check_robot_port(ip, port):
@@ -99,7 +98,7 @@ def move_to_init():
         send_ur_script(set_tcp)
         receive_response(1)
         send_ur_script(movej_init)
-        receive_response(1) ## modificat: timel-->1
+        receive_response(1) 
     else:
         print("UR5e not connected. Simulation only.")
 
@@ -116,11 +115,11 @@ def movement_1():
         send_ur_script(set_tcp)
         receive_response(1)
         send_ur_script(movel_give_paw_app)
-        receive_response(1) ## modificat: timel-->1
+        receive_response(1) 
         send_ur_script(movel_give_paw)
-        receive_response(timel)
+        receive_response(1)
         send_ur_script(movel_give_paw_app)
-        receive_response(2) ## modificat: timel-->2
+        receive_response(2) 
 
 def movement_2():
     print("Who is a good boy?!")
@@ -139,24 +138,24 @@ def movement_2():
         send_ur_script(set_tcp)
         receive_response(1)
         send_ur_script(movel_good_boy_app)
-        receive_response(1) ## modificat: timel-->1
+        receive_response(1) 
         send_ur_script(movel_good_boy_1)
-        receive_response(0.5) ## modificat: timel-->0.5
+        receive_response(0.5) 
         send_ur_script(movel_good_boy_2)
-        receive_response(0.5) ## modificat: timel-->0.5
+        receive_response(0.5) 
         send_ur_script(movel_good_boy_1)
-        receive_response(0.5) ## modificat: timel-->0.5
+        receive_response(0.5) 
         send_ur_script(movel_good_boy_3)
-        receive_response(0.5) ## modificat: timel-->0.5
+        receive_response(0.5) 
         send_ur_script(movel_good_boy_1)
-        receive_response(0.5) ## modificat: timel-->0.5
+        receive_response(0.5) 
         send_ur_script(movel_good_boy_app)
-        receive_response(2) ## modificat: timel-->2
+        receive_response(2) 
 
 def movement_3():
     print("Sit!")
     robot.setSpeed(20)
-    robot.MoveL(Good_boy_app, True) 
+    # robot.MoveL(Good_boy_app, True) 
     robot.setSpeed(100)
     robot.MoveL(Sit_1, True)
     robot.MoveL(Sit_2, True)
@@ -169,9 +168,9 @@ def movement_3():
         #send_ur_script(movel_good_boy_app)###crec que no cal
         #receive_response(1)
         send_ur_script(movel_sit_1)
-        receive_response(0.5) ## modificat: timel-->0.5
+        receive_response(0.5) 
         send_ur_script(movel_sit_2)
-        receive_response(2) ## modificat: timel-->2
+        receive_response(2)
         #send_ur_script(movel_good_boy_app)###crec que no cal
         #receive_response(1)
 
